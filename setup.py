@@ -23,7 +23,10 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: Korean',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
         'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Software Development :: Libraries :: Python Modules',
@@ -31,5 +34,5 @@ setup(
     ],
     license='MIT',
     keywords='korean-nlp, korean-text-processing, hangul, toolkit',
-    python_requires='>=3',
+    python_requires='>=3.5',
 )
