@@ -16,14 +16,12 @@ class Obfuscator:
         phonemes = split_by_phoneme(text)
         for rule in phoneme_rules:
             for index, recipe in enumerate(phonemes):
-                if rule.is_match(recipe, phonemes, index):
-                    phonemes[index] = rule.apply(recipe, phonemes, index)
+                phonemes[index] = rule.apply(recipe, phonemes, index)
 
         chars = join_phonemes(phonemes)
         for rule in character_rules:
             for index, char in enumerate(chars):
-                if rule.is_match(char, chars, index):
-                    chars[index] = rule.apply(char, chars, index)
+                chars[index] = rule.apply(char, chars, index)
 
         text = join_chars(chars)
         return text

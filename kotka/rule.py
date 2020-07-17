@@ -11,15 +11,9 @@ class PhonemeReplaceRule(BaseRule):
     def apply(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> CharRecipe:
         pass
 
-    def is_match(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> bool:
-        pass
-
 
 class CharacterReplaceRule(BaseRule):
     def apply(self, char: Char, chars: List[Char], index: int) -> Char:
-        pass
-
-    def is_match(self, char: Char, chars: List[Char], index: int) -> bool:
         pass
 
 
@@ -30,10 +24,7 @@ class SquareDog(PhonemeReplaceRule):
     """
 
     def apply(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> CharRecipe:
-        return replace_phoneme(recipe, 'ㅇ', 'ㅁ')
-
-    def is_match(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> bool:
-        return has_phoneme(recipe, 'ㅇ')
+        return replace_phoneme(recipe, 'ㅇ', 'ㅁ') if has_phoneme(recipe, 'ㅇ') else recipe
 
 
 class CircleDog(PhonemeReplaceRule):
@@ -44,10 +35,7 @@ class CircleDog(PhonemeReplaceRule):
     """
 
     def apply(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> CharRecipe:
-        return replace_phoneme(recipe, 'ㅁ', 'ㅇ')
-
-    def is_match(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> bool:
-        return has_phoneme(recipe, 'ㅁ')
+        return replace_phoneme(recipe, 'ㅁ', 'ㅇ') if has_phoneme(recipe, 'ㅁ') else recipe
 
 
 class UShapedDog(PhonemeReplaceRule):
@@ -58,10 +46,8 @@ class UShapedDog(PhonemeReplaceRule):
     """
 
     def apply(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> CharRecipe:
-        return replace_phoneme(replace_phoneme(recipe, 'ㅁ', 'ㅂ'), 'ㅇ', 'ㅂ')
-
-    def is_match(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> bool:
-        return has_phoneme(recipe, 'ㅁ') or has_phoneme(recipe, 'ㅇ')
+        return replace_phoneme(replace_phoneme(recipe, 'ㅁ', 'ㅂ'), 'ㅇ', 'ㅂ') \
+            if has_phoneme(recipe, 'ㅁ') or has_phoneme(recipe, 'ㅇ') else recipe
 
 
 class SeaoCat(PhonemeReplaceRule):
@@ -71,17 +57,19 @@ class SeaoCat(PhonemeReplaceRule):
     """
 
     def apply(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> CharRecipe:
-        recipe = replace_phoneme(recipe, 'ㅔ', 'ㅐ')
-        recipe = replace_phoneme(recipe, 'ㅖ', 'ㅐ')
-        recipe = replace_phoneme(recipe, 'ㅒ', 'ㅐ')
-        recipe = replace_phoneme(recipe, 'ㅝ', 'ㅓ')
-        recipe = replace_phoneme(recipe, 'ㅞ', 'ㅓ')
-        recipe = replace_phoneme(recipe, 'ㅛ', 'ㅗ')
+        if has_phoneme(recipe, 'ㅔ'):
+            return replace_phoneme(recipe, 'ㅔ', 'ㅐ')
+        elif has_phoneme(recipe, 'ㅖ'):
+            return replace_phoneme(recipe, 'ㅖ', 'ㅐ')
+        elif has_phoneme(recipe, 'ㅒ'):
+            return replace_phoneme(recipe, 'ㅒ', 'ㅐ')
+        elif has_phoneme(recipe, 'ㅝ'):
+            return replace_phoneme(recipe, 'ㅝ', 'ㅓ')
+        elif has_phoneme(recipe, 'ㅞ'):
+            return replace_phoneme(recipe, 'ㅞ', 'ㅓ')
+        elif has_phoneme(recipe, 'ㅛ'):
+            return replace_phoneme(recipe, 'ㅛ', 'ㅗ')
         return recipe
-
-    def is_match(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> bool:
-        return has_phoneme(recipe, 'ㅔ') or has_phoneme(recipe, 'ㅖ') or has_phoneme(recipe, 'ㅒ') \
-            or has_phoneme(recipe, 'ㅝ') or has_phoneme(recipe, 'ㅞ') or has_phoneme(recipe, 'ㅛ')
 
 
 def filter_rule(rules: List[BaseRule], rule_type: type) -> List[BaseRule]:
