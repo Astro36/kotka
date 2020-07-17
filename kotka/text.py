@@ -1,21 +1,29 @@
-from .strategy import CharacterStrategy
-from .utils import from_chars, to_chars
+from .rule import BaseRule, PhonemeReplaceRule, CharacterReplaceRule, filter_rule
+from .utils import split_by_phoneme, join_phonemes, join_chars
 
 
 class Obfuscator:
     def __init__(self):
-        self.strategies = []
+        self.rules = []
 
-    def add_strategy(self, strategy):
-        self.strategies.append(strategy)
+    def add_rule(self, rule: BaseRule):
+        self.rules.append(rule)
 
-    def run(self, text):
-        for strategy in self.strategies:
-            if issubclass(strategy.__class__, CharacterStrategy):
-                chars = to_chars(text)
-                for index, char in enumerate(chars):
-                    if strategy.is_match(char, chars, index):
-                        print('match', char)
-                        chars[index] = strategy.apply(char, chars, index)
-                text = from_chars(chars)
+    def run(self, text: str) -> str:
+        phoneme_rules = filter_rule(self.rules, PhonemeReplaceRule)
+        character_rules = filter_rule(self.rules, CharacterReplaceRule)
+
+        phonemes = split_by_phoneme(text)
+        for rule in phoneme_rules:
+            for index, recipe in enumerate(phonemes):
+                if rule.is_match(recipe, phonemes, index):
+                    phonemes[index] = rule.apply(recipe, phonemes, index)
+
+        chars = join_phonemes(phonemes)
+        for rule in character_rules:
+            for index, char in enumerate(chars):
+                if rule.is_match(char, chars, index):
+                    chars[index] = rule.apply(char, chars, index)
+
+        text = join_chars(chars)
         return text
