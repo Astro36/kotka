@@ -1,19 +1,10 @@
 from typing import List
-from .typing import Char, CharRecipe
+from .typing import CharRecipe
 from .utils import has_phoneme, replace_phoneme
 
 
-class BaseRule:
-    pass
-
-
-class PhonemeReplaceRule(BaseRule):
+class PhonemeReplaceRule:
     def apply(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> CharRecipe:
-        pass
-
-
-class CharacterReplaceRule(BaseRule):
-    def apply(self, char: Char, chars: List[Char], index: int) -> Char:
         pass
 
 
@@ -70,7 +61,3 @@ class SeaoCat(PhonemeReplaceRule):
         elif has_phoneme(recipe, 'ㅛ'):
             return replace_phoneme(recipe, 'ㅛ', 'ㅗ')
         return recipe
-
-
-def filter_rule(rules: List[BaseRule], rule_type: type) -> List[BaseRule]:
-    return [rule for rule in rules if issubclass(rule.__class__, rule_type)]
