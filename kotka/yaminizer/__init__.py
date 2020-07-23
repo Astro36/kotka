@@ -1,4 +1,4 @@
-import re
+import random
 from hgtk.checker import has_batchim
 from .utils import create_batchim_characters, is_complete_hangul_character, sort_dictionary_by_key
 
@@ -126,10 +126,11 @@ for key, value in yamin_dictionary.copy().items():
 yamin_dictionary = sort_dictionary_by_key(yamin_dictionary)
 
 
-def encode_yamin(text: str) -> str:
+def encode_yamin(text: str, active_rate=1.0) -> str:
     yamin_pairs = yamin_dictionary.items()
     for idx, (key, _) in enumerate(yamin_pairs):
-        text = text.replace(key, f'$__{idx}__$')
+        if random.random() < active_rate:
+            text = text.replace(key, f'$__{idx}__$')
     for idx, (_, value) in enumerate(yamin_pairs):
         text = text.replace(f'$__{idx}__$', value)
     return text

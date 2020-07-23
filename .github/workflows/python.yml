@@ -61,7 +61,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Cache Python modules
+      - name: Cache dependencies
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
@@ -86,3 +86,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
+          fail_ci_if_error: true
