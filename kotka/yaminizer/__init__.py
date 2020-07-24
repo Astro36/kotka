@@ -1,6 +1,7 @@
-import random
+from random import random
 from hgtk.checker import has_batchim
-from .utils import create_batchim_characters, is_complete_hangul_character, sort_dictionary_by_key
+from .utils import create_batchim_characters, sort_dictionary_by_key
+from ..hangul import is_complete_hangul
 
 # See https://namu.wiki/w/야민정음
 raw_yamin_dictionary = {
@@ -133,8 +134,8 @@ raw_yamin_dictionary = {
 yamin_dictionary = raw_yamin_dictionary.copy()
 
 for key, value in raw_yamin_dictionary.items():
-    if is_complete_hangul_character(key) and not has_batchim(key) \
-            and is_complete_hangul_character(value) and not has_batchim(value):
+    if is_complete_hangul(key) and not has_batchim(key) \
+            and is_complete_hangul(value) and not has_batchim(value):
         first_chars = create_batchim_characters(key)
         second_chars = create_batchim_characters(value)
         for i in range(27):
@@ -150,7 +151,7 @@ yamin_dictionary = sort_dictionary_by_key(yamin_dictionary)
 def encode_yamin(text: str, active_rate=1.0) -> str:
     yamin_pairs = yamin_dictionary.items()
     for idx, (key, _) in enumerate(yamin_pairs):
-        if random.random() < active_rate:
+        if random() < active_rate:
             text = text.replace(key, f'$__{idx}__$')
     for idx, (_, value) in enumerate(yamin_pairs):
         text = text.replace(f'$__{idx}__$', value)

@@ -1,7 +1,7 @@
 from typing import List
-from hgtk.checker import is_hangul
 from hgtk.letter import compose, decompose
 from .typing import Char, CharRecipe
+from ..hangul import is_complete_hangul
 
 
 def has_phoneme(recipe: CharRecipe, target_phoneme: Char) -> bool:
@@ -15,7 +15,7 @@ def replace_phoneme(recipe: CharRecipe, old_phoneme: str, new_phoneme: str) -> s
 
 
 def split_by_phoneme(text: str) -> List[CharRecipe]:
-    return [decompose(char) if is_hangul(char) else char for char in text]
+    return [decompose(char) if is_complete_hangul(char) else char for char in text]
 
 
 def join_phonemes(phonemes: List[CharRecipe]) -> List[Char]:
