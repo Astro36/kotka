@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 basedir = path.abspath(path.dirname(__file__))
 with open(path.join(basedir, 'README.md'), encoding='utf-8') as file:
-    long_description = file.read()
+    long_description = file.read().replace('\r\n', '\n')
 
 setup(
     name='kotka',
