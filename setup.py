@@ -8,7 +8,7 @@ with open(path.join(basedir, 'README.md'), encoding='utf-8') as file:
 
 setup(
     name='kotka',
-    version='0.1.0',
+    version='0.1.1',
     description='Korean Obfuscation ToolKit Advanced',
     long_description=long_description,
     long_description_content_type='text/markdown',
