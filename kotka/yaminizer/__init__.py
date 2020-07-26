@@ -1,7 +1,7 @@
 from random import random
 from hgtk.checker import has_batchim
-from .utils import create_batchim_characters, sort_dictionary_by_key
-from ..hangul import is_complete_hangul
+from ..utils.dictionary import sort_by_key
+from ..utils.hangul import create_possible_syllables, is_complete_syllable
 
 # See https://namu.wiki/w/야민정음
 raw_yamin_dictionary = {
@@ -17,7 +17,6 @@ raw_yamin_dictionary = {
     '비': '네',
     '삐': '볘',
     '눠': '부',
-    '외': '요',
     '며': '띠',
     '거': '지',
     '고': '끄',
@@ -27,7 +26,6 @@ raw_yamin_dictionary = {
 
     # 한글 - 한글 (받침 미포함)
     '인': '외',
-    '요': '인',
     '유': '윾',
     '위': '읶',
     '우': '윽',
@@ -134,10 +132,10 @@ raw_yamin_dictionary = {
 yamin_dictionary = raw_yamin_dictionary.copy()
 
 for key, value in raw_yamin_dictionary.items():
-    if is_complete_hangul(key) and not has_batchim(key) \
-            and is_complete_hangul(value) and not has_batchim(value):
-        first_chars = create_batchim_characters(key)
-        second_chars = create_batchim_characters(value)
+    if is_complete_syllable(key) and not has_batchim(key) \
+            and is_complete_syllable(value) and not has_batchim(value):
+        first_chars = create_possible_syllables(key)
+        second_chars = create_possible_syllables(value)
         for i in range(27):
             yamin_dictionary[first_chars[i]] = second_chars[i]
 
@@ -145,10 +143,12 @@ for key, value in yamin_dictionary.copy().items():
     if value not in yamin_dictionary:
         yamin_dictionary[value] = key
 
-yamin_dictionary = sort_dictionary_by_key(yamin_dictionary)
+yamin_dictionary = sort_by_key(yamin_dictionary, lambda a, b:
+                               (1 if len(a[0]) < len(b[0]) else -1) if len(a[0]) != len(b[0])
+                               else (-1 if a[0] < b[0] else 1))
 
 
-def encode_yamin(text: str, active_rate=1.0) -> str:
+def encode_yamin(text: str, *, active_rate=1.0) -> str:
     yamin_pairs = yamin_dictionary.items()
     for idx, (key, _) in enumerate(yamin_pairs):
         if random() < active_rate:

@@ -1,6 +1,5 @@
 from typing import List
-from .typing import CharRecipe
-from .utils import has_phoneme, replace_phoneme
+from ..utils.hangul import CharRecipe, has_phoneme, replace_phoneme
 
 
 class PhonemeReplaceRule:

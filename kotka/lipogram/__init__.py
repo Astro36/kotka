@@ -1,13 +1,12 @@
 from .rules import PhonemeReplaceRule
-from .utils import split_by_phoneme, join_phonemes, join_chars
+from ..utils.hangul import split_by_phoneme, join_phonemes, join_syllables
 
 
-def replace_phoneme(text: str, rules: PhonemeReplaceRule) -> str:
+def replace_phoneme(text: str, *, rule: PhonemeReplaceRule) -> str:
     phonemes = split_by_phoneme(text)
-    for rule in rules:
-        for index, recipe in enumerate(phonemes):
-            phonemes[index] = rule.apply(recipe, phonemes, index)
+    for index, recipe in enumerate(phonemes):
+        phonemes[index] = rule.apply(recipe, phonemes, index)
 
     chars = join_phonemes(phonemes)
-    text = join_chars(chars)
+    text = join_syllables(chars)
     return text
