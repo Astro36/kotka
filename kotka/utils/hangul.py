@@ -9,7 +9,7 @@ def has_phoneme(recipe: CharRecipe, target_phoneme: str) -> bool:
     return target_phoneme in recipe if isinstance(recipe, tuple) else recipe == target_phoneme
 
 
-def replace_phoneme(recipe: CharRecipe, old_phoneme: str, new_phoneme: str) -> str:
+def replace_phoneme(recipe: CharRecipe, old_phoneme: str, new_phoneme: str) -> CharRecipe:
     if isinstance(recipe, tuple):
         return tuple([new_phoneme if phoneme == old_phoneme else phoneme for phoneme in recipe])
     return new_phoneme if recipe == old_phoneme else old_phoneme

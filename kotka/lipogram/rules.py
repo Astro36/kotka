@@ -4,7 +4,7 @@ from ..utils.hangul import CharRecipe, has_phoneme, replace_phoneme
 
 class PhonemeReplaceRule:
     def apply(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> CharRecipe:
-        pass
+        raise NotImplementedError
 
 
 class SquareDog(PhonemeReplaceRule):
