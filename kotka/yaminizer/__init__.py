@@ -1,4 +1,5 @@
 from random import random
+import re
 from hgtk.checker import has_batchim
 from ..utils.dictionary import sort_by_key
 from ..utils.hangul import create_possible_syllables, is_complete_syllable
@@ -149,10 +150,9 @@ yamin_dictionary = sort_by_key(yamin_dictionary, lambda a, b:
 
 
 def encode_yamin(text: str, *, active_rate=1.0) -> str:
-    yamin_pairs = yamin_dictionary.items()
-    for idx, (key, _) in enumerate(yamin_pairs):
-        if random() < active_rate:
-            text = text.replace(key, f'$__{idx}__$')
-    for idx, (_, value) in enumerate(yamin_pairs):
-        text = text.replace(f'$__{idx}__$', value)
+    replaced_tokens = [token for token in yamin_dictionary.keys() if random() < active_rate]
+    regex_escaped_tokens = [token.replace('|', '\\|') if '|' in token else token for token in replaced_tokens]
+    yamin_match_pattern = f'({"|".join(regex_escaped_tokens)})'
+    yamin_match_regex = re.compile(yamin_match_pattern)
+    text = re.sub(yamin_match_regex, lambda match: yamin_dictionary[match.group(0)], text)
     return text
