@@ -38,25 +38,3 @@ class UShapedDog(PhonemeReplaceRule):
     def apply(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> CharRecipe:
         return replace_phoneme(replace_phoneme(recipe, 'ㅁ', 'ㅂ'), 'ㅇ', 'ㅂ') \
             if has_phoneme(recipe, 'ㅁ') or has_phoneme(recipe, 'ㅇ') else recipe
-
-
-class SeaoCat(PhonemeReplaceRule):
-    """
-    안녕하새오 고양이애오 겨울 추어오 문 열어주새오
-    가족 대려오개 감사해오 문 열어주새오
-    """
-
-    def apply(self, recipe: CharRecipe, recipes: List[CharRecipe], index: int) -> CharRecipe:
-        if has_phoneme(recipe, 'ㅔ'):
-            return replace_phoneme(recipe, 'ㅔ', 'ㅐ')
-        elif has_phoneme(recipe, 'ㅖ'):
-            return replace_phoneme(recipe, 'ㅖ', 'ㅐ')
-        elif has_phoneme(recipe, 'ㅒ'):
-            return replace_phoneme(recipe, 'ㅒ', 'ㅐ')
-        elif has_phoneme(recipe, 'ㅝ'):
-            return replace_phoneme(recipe, 'ㅝ', 'ㅓ')
-        elif has_phoneme(recipe, 'ㅞ'):
-            return replace_phoneme(recipe, 'ㅞ', 'ㅓ')
-        elif has_phoneme(recipe, 'ㅛ'):
-            return replace_phoneme(recipe, 'ㅛ', 'ㅗ')
-        return recipe

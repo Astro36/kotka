@@ -18,7 +18,6 @@ See [CHANGELOG](./CHANGELOG.md)
 ### Text Obfuscation
 
 - [네모네모 멈뭄미의 저주 시리즈](https://namu.wiki/w/네모네모%20멈뭄미): "안녕하세요" -> "만념하세묘"
-- [해오체](https://namu.wiki/w/해오체): "안녕하세요" -> "안녕하세오"
 - [야민정음](https://namu.wiki/w/야민정음): "명작" -> "띵작"
 - 확률적 자음/모음 분리: "안녕하세요" -> "안ㄴㅕㅇ하ㅅㅔ요"
 

@@ -1,5 +1,5 @@
 from kotka.lipogram import replace_phoneme
-from kotka.lipogram.rules import SquareDog, CircleDog, UShapedDog, SeaoCat
+from kotka.lipogram.rules import SquareDog, CircleDog, UShapedDog
 
 
 def test_replace_phoneme_square_dog_0():
@@ -36,15 +36,3 @@ def test_replace_phoneme_u_shaped_dog_1():
     input = '"ㅁㄴ암ㄴㅇ모앱자" 판사님 이 글은 저희집 고양이가 썼습니다'
     output = replace_phoneme(input, rule=UShapedDog())
     assert output == '"ㅇㄴ밥ㄴㅇ보뱁자" 판사닙 비 글븐 저희집 고뱝비가 썼습니다'
-
-
-def test_replace_phoneme_seao_cat_0():
-    input = '안녕하세요 고양이예요 겨울 추워요 문 열어주세요'
-    output = replace_phoneme(input, rule=SeaoCat())
-    assert output == '안녕하새오 고양이애오 겨울 추어오 문 열어주새오'
-
-
-def test_replace_phoneme_seao_cat_1():
-    input = '너 때문에 흥이 다 깨져버렸으니까 책임져'
-    output = replace_phoneme(input, rule=SeaoCat())
-    assert output == '너 때문애 흥이 다 깨져버렸으니까 책임져'
